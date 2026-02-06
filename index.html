@@ -380,7 +380,9 @@
                 );
 
                 if (!response.ok) {
-                    throw new Error('Failed to save to GitHub');
+                    const errorData = await response.json();
+                    console.error('GitHub API Error:', errorData);
+                    throw new Error(`Failed to save: ${response.status} - ${errorData.message || 'Unknown error'}`);
                 }
 
                 console.log('Saved to GitHub successfully');
@@ -423,7 +425,9 @@
                         );
 
                         if (!response.ok) {
-                            throw new Error('Failed to upload image');
+                            const errorData = await response.json();
+                            console.error('GitHub API Error:', errorData);
+                            throw new Error(`Failed to upload image: ${response.status} - ${errorData.message || 'Unknown error'}`);
                         }
 
                         const data = await response.json();
